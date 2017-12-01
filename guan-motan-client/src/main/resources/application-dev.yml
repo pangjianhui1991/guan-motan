@@ -1,0 +1,85 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+#
+#eureka:
+#    instance:
+#        prefer-ip-address: true
+#    client:
+#        enabled: true
+#        healthcheck:
+#            enabled: true
+#        registerWithEureka: true
+#        fetchRegistry: true
+#        serviceUrl:
+#            defaultZone: http://admin:admin@localhost:8761/eureka/
+
+spring:
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      enabled: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/guan?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull
+    username: root
+    password: guan123
+  jpa:
+    database : MYSQL
+    show-sql : true
+    hibernate:
+      ddl-auto : update
+      naming-strategy : org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect : org.hibernate.dialect.MySQL5Dialect
+
+motan:
+  enabled: true
+  annotation:
+    package: com.guan
+
+# Motan Registry config
+#motan.enabled=true
+# use local
+  registry:
+    #regProtocol: consul
+    #address: 10.92.7.12:8500
+    #name: my_consul
+    regProtocol: consul
+    address: 127.0.0.1:8500
+    #address: 127.0.0.1:2181
+    name: my_consul
+    connectTimeout: 30000
+
+# use zookeeper
+#motan.registry.regProtocol=zookeeper
+#motan.registry.address=127.0.0.1:2181
+#motan.registry.connectTimeout=2000
+
+# Motan Protocol config
+
+# Motan BasicService config
+  protocol:
+    name: motan
+  service:
+    application: guan-motan-client
+    exportPort: 7800
+    accessLog: false
+    shareChannel: true
+  referer:
+    requestTimeout: 30000
+
+server:
+  port: 8080
+

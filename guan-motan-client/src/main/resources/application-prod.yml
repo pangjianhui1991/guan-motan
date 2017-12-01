@@ -1,0 +1,68 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        enabled: true
+        healthcheck:
+            enabled: true
+        registerWithEureka: true
+        fetchRegistry: true
+        serviceUrl:
+            defaultZone: http://admin:admin@localhost:8761/eureka/
+
+spring:
+  application:
+    name: guan-motan-client
+
+motan:
+  enabled: true
+  annotation:
+    package: com.guan
+
+# Motan Registry config
+#motan.enabled=true
+# use local
+  registry:
+    #regProtocol: consul
+    #address: 10.92.7.12:8500
+    #name: my_consul
+    regProtocol: consul
+    address: 127.0.0.1:8500
+    #address: 127.0.0.1:2181
+    name: my_consul
+    connectTimeout: 5000
+
+# use zookeeper
+#motan.registry.regProtocol=zookeeper
+#motan.registry.address=127.0.0.1:2181
+#motan.registry.connectTimeout=2000
+
+# Motan Protocol config
+
+# Motan BasicService config
+  protocol:
+    name: motan
+  service:
+    application: guan-motan-client
+    exportPort: 7800
+    accessLog: false
+    shareChannel: true
+  referer:
+    requestTimeout: 50000
+    filter: apiClientFilter
+
+server:
+  port: 8080
+

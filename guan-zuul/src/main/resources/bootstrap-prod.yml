@@ -1,0 +1,5 @@
+# ===================================================================
+# Spring Cloud Config bootstrap configuration for the "prod" profile
+# ===================================================================
+log:
+  path: /opt/apps/logs/

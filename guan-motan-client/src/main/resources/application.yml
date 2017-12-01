@@ -1,0 +1,7 @@
+#eureka:
+#    instance:
+#        appname: guan-motan-client
+#        instanceId: guan-motan-client:${spring.application.instance_id:${random.value}}
+#        statusPageUrlPath: /info
+#        healthCheckUrlPath: /health
+

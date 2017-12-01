@@ -1,0 +1,110 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+#eureka:
+#    instance:
+#        prefer-ip-address: true
+#    client:
+#        enabled: true
+#        healthcheck:
+#            enabled: true
+#        registerWithEureka: true
+#        fetchRegistry: true
+#        serviceUrl:
+#            defaultZone: http://admin:admin@localhost:8761/eureka/
+
+spring:
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    database: 0
+#    timeout: 0
+  application:
+    name: guan-motan-server
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      enabled: true
+    config:
+      enabled: true   #默认是true --
+      format: YAML    # 表示consul上面文件的格式 有四种 YAML PROPERTIES KEY-VALUE FILES
+      data-key: configuration    #表示consul上面的KEY值(或者说文件的名字) 默认是data
+  datasource:
+          type: com.alibaba.druid.pool.DruidDataSource
+          driverClassName: com.mysql.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/guan?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull
+          username: root
+          password: guan123
+  jpa:
+      database : MYSQL
+      show-sql : true
+      hibernate:
+        ddl-auto : update
+        naming-strategy : org.hibernate.cfg.ImprovedNamingStrategy
+      properties:
+        hibernate:
+          dialect : org.hibernate.dialect.MySQL5Dialect
+
+##timeout config
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 200   #线程池核心线程数
+#      maxQueueSize: 100 #最大排队长度
+#      queueSizeRejectionThreshold: 200 #排队线程数量阈值，默认为5，达到时拒绝
+#  command:
+#    default:
+#      circuitBreaker:
+#        requestVolumeThreshold: 20 #当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        sleepWindowInMilliseconds: 5 #短路多久以后开始尝试是否恢复，默认5s
+#        #errorThresholdPercentage 出错百分比阈值，当达到此阈值后，开始短路。默认50%
+#      execution:
+#        timeout:
+#          enabled: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 60000
+
+motan:
+  enabled: true
+  annotation:
+    package: com.guan
+  registry:
+    regProtocol : consul #注册中心协议
+    address: 127.0.0.1:8500
+    name: my_consul
+    connectTimeout: 30000
+
+# Motan Protocol config
+
+# Motan BasicService config
+  protocol:
+    name: motan
+    id: pro_motan
+    maxWorkerThread: 800
+    minWorkerThread: 200
+  service:
+    application: guan-motan-service
+#    exportPort: 8886
+    exportPort: 8887
+    accessLog: false
+    shareChannel: true
+  referer:
+    requestTimeout: 30000
+
+server:
+#  port: 8881
+  port: 8882
+
+
+

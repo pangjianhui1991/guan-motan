@@ -1,0 +1,5 @@
+# ===================================================================
+# Spring Cloud Config bootstrap configuration for the "dev" profile
+# ===================================================================
+log:
+  path: /opt/micoextra/
